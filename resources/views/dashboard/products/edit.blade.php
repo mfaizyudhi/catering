@@ -42,7 +42,7 @@
             </div>
         @endif
 
-        <flux:input type="file" label="Image" name="image" class="mb-3" />
+        <flux:input type="file" label="Image" name="image" class="mb-3" accept="image/*" />
 
         <flux:checkbox label="Active" class="mb-6" name="is_active" {{ $product->is_active ? 'checked' : '' }} />
 

@@ -1,253 +1,205 @@
 <x-layout>
-    <div class="main-banner" id="top">
-        <div class="container-fluid">
-            <div class="row">
+    <x-slot name="title">Homepage - HexaShop</x-slot>
+    <link rel="stylesheet" href="{{ asset('theme/hexashop/assets/css/hexashop.css') }}">
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
                 <div class="col-lg-6">
-                    <div class="left-content">
-                        <div class="thumb">
-                            <div class="inner-content">
-                                <h4>We Are Hexashop</h4>
-                                <span>Awesome, clean &amp; creative HTML5 Template</span>
-                                <div class="main-border-button">
-                                    <a href="#">Purchase Now!</a>
-                                </div>
-                            </div>
-                            <img src="{{asset('theme/hexashop/assets/images/left-banner-image.jpg')}}" alt="">
+                    <h1>Temukan Produk Terbaik Anda</h1>
+                    <p class="lead">Diskon hingga 70% untuk produk pilihan</p>
+                    <div class="hero-cta">
+                        <a href="/products" class="btn btn-primary">Belanja Sekarang</a>
+                        <a href="#featured" class="btn btn-outline-light">Produk Unggulan</a>
+                    </div>
+                    <div class="hero-features">
+                        <div class="feature-item">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>Gratis Ongkir</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>Garansi 30 Hari</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="right-content">
-                        <div class="row">
-                            @foreach ($categories as $key=>$category)
-                                <div class="col-lg-6">
-                                    <div class="right-first-image">
-                                        <div class="thumb">
-                                            <div class="inner-content">
-                                                <h4>{{$category->name}}</h4>
-                                                <span>{{$category->description}}</span>
-                                            </div>
-                                            <div class="hover-content">
-                                                <div class="inner">
-                                                    <h4>{{$category->name}}</h4>
-                                                    <p>{{$category->description}}</p>
-                                                    <div class="main-border-button">
-                                                        <a href="{{ URL::to('category/'.$category->slug) }}">Discover More</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <img src="{{asset('theme/hexashop/assets/images/baner-right-image-01.jpg')}}">
-                                        </div>
-                                    </div>
-                                </div>    
-                            @endforeach
-                            
-                        </div>
-                    </div>
+                    <img src="{{ asset('hexashop/images/hero-image.png') }}" alt="Hero Image" class="img-fluid">
                 </div>
             </div>
         </div>
-    </div>
-    
-    <x-latest-product 
-        :id="'men'"
-        :title="'Men\'s Latest'" 
-        :description="'Details to details is what makes Hexashop different from the other themes.'" 
-         />
+    </section>
 
-    <!-- ***** Women Area Starts ***** -->
-    <x-latest-product 
-        :id="'women'"
-        :title="'Women\'s Latest'" 
-        :description="'Details to details is what makes Hexashop different from the other themes.'" 
-         />
-    <!-- ***** Women Area Ends ***** -->
-
-    <!-- ***** Explore Area Starts ***** -->
-    <section class="section" id="explore">
+    <!-- Categories Section -->
+    <section class="category-section">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="left-content">
-                        <h2>Explore Our Products</h2>
-                        <span>You are allowed to use this HexaShop HTML CSS template. You can feel free to modify or edit this layout. You can convert this template as any kind of ecommerce CMS theme as you wish.</span>
-                        <div class="quote">
-                            <i class="fa fa-quote-left"></i><p>You are not allowed to redistribute this template ZIP file on any other website.</p>
+            <div class="section-header">
+                <h2>Kategori Populer</h2>
+                <div class="slider-controls">
+                    <button class="slider-btn prev-category"><i class="bi bi-chevron-left"></i></button>
+                    <button class="slider-btn next-category"><i class="bi bi-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <div class="category-slider">
+                @foreach($categories as $category)
+                <div class="category-item">
+                    <a href="/category/{{ $category->slug }}" class="text-decoration-none">
+                        <div class="category-icon">
+                            <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}">
                         </div>
-                        <p>There are 5 pages included in this HexaShop Template and we are providing it to you for absolutely free of charge at our TemplateMo website. There are web development costs for us.</p>
-                        <p>If this template is beneficial for your website or business, please kindly <a rel="nofollow" href="https://paypal.me/templatemo" target="_blank">support us</a> a little via PayPal. Please also tell your friends about our great website. Thank you.</p>
-                        <div class="main-border-button">
-                            <a href="products.html">Discover More</a>
+                        <h6>{{ $category->name }}</h6>
+                        <small>{{ $category->products_count }} produk</small>
+                    </a>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+<section class="featured-section" id="featured">
+    <div class="container">
+        <div class="section-header">
+            <h2>Produk Unggulan</h2>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Terbaru</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Terlaris</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Diskon</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="product-grid-container">
+            @forelse($products as $product)
+            <div class="product-card-wrapper">
+                <div class="product-card">
+                    <div class="product-badge">
+                        @if($product->old_price)
+                        <span class="badge sale-badge">Sale</span>
+                        @endif
+                        @if($product->is_new)
+                        <span class="badge new-badge">New</span>
+                        @endif
+                    </div>
+                    <a href="{{ route('product.show', $product->slug) }}" class="product-image">
+                        <img src="{{ $product->image_url ? asset('storage/' . $product->image_url) : asset('hexashop/images/default-product.jpg') }}"
+                            alt="{{ $product->name }}"
+                            loading="lazy">
+                    </a>
+                    <div class="product-actions">
+                        <button class="action-btn wishlist-btn" data-product-id="{{ $product->id }}">
+                            <i class="bi bi-heart"></i>
+                        </button>
+                        <button class="action-btn quick-view-btn" data-product-id="{{ $product->id }}">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
+                    <div class="product-details">
+                        <a href="{{ route('product.show', $product->slug) }}" class="product-title">
+                            {{ Str::limit($product->name, 40) }}
+                        </a>
+                        <div class="product-rating">
+                            <div class="stars">
+                                @for($i = 1; $i <= 5; $i++)
+                                    @if($i <= $product->rating)
+                                    <i class="bi bi-star-fill"></i>
+                                    @else
+                                    <i class="bi bi-star"></i>
+                                    @endif
+                                @endfor
+                            </div>
+                            <small>({{ $product->reviews_count }})</small>
                         </div>
+                        <div class="product-price">
+                            <span class="current-price">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                            @if($product->old_price)
+                            <span class="old-price">Rp {{ number_format($product->old_price, 0, ',', '.') }}</span>
+                            @endif
+                        </div>
+                        <a href="{{ route('product.show', $product->slug) }}" class="add-to-cart-link">
+                        <button class="add-to-cart-btn" data-product-id="{{ $product->id }}">
+                            <i class="bi bi-eye"></i> Detail Product
+                        </button>
+                        </a>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="right-content">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="leather">
-                                    <h4>Leather Bags</h4>
-                                    <span>Latest Collection</span>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="first-image">
-                                    <img src="{{asset('theme/hexashop/assets/images/explore-image-01.jpg')}}" alt="">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="second-image">
-                                    <img src="{{asset('theme/hexashop/assets/images/explore-image-02.jpg')}}" alt="">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="types">
-                                    <h4>Different Types</h4>
-                                    <span>Over 304 Products</span>
-                                </div>
-                            </div>
+            </div>
+            @empty
+            <div class="no-products">
+                <i class="bi bi-info-circle-fill"></i>
+                <p>Belum ada produk tersedia.</p>
+            </div>
+            @endforelse
+        </div>
+    </div>
+</section>
+
+    <!-- Promo Banner -->
+    <section class="promo-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="promo-card free-shipping">
+                        <div class="promo-content">
+                            <h3>Gratis Ongkir</h3>
+                            <p>Minimal pembelian Rp 200.000</p>
+                            <a href="#" class="promo-btn">Syarat & Ketentuan</a>
                         </div>
+                        <img src="{{ asset('hexashop/images/delivery.png') }}" class="promo-img">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="promo-card big-discount">
+                        <div class="promo-content">
+                            <h3>Diskon 50%</h3>
+                            <p>Khusus produk pilihan</p>
+                            <a href="#" class="promo-btn">Belanja Sekarang</a>
+                        </div>
+                        <img src="{{ asset('hexashop/images/discount.png') }}" class="promo-img">
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- ***** Explore Area Ends ***** -->
 
-    <!-- ***** Social Area Starts ***** -->
-    <section class="section" id="social">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-heading">
-                        <h2>Social Media</h2>
-                        <span>Details to details is what makes Hexashop different from the other themes.</span>
-                    </div>
-                </div>
-            </div>
+    <!-- Testimonials Section -->
+<section class="testimonial-section">
+    <div class="container">
+        <div class="section-header center">
+            <h2>Apa Kata Pelanggan Kami</h2>
         </div>
-        <div class="container">
-            <div class="row images">
-                <div class="col-2">
-                    <div class="thumb">
-                        <div class="icon">
-                            <a href="http://instagram.com">
-                                <h6>Fashion</h6>
-                                <i class="fa fa-instagram"></i>
-                            </a>
+        
+        <div class="testimonial-grid">
+            @foreach($testimonials as $testimonial)
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <img src="{{ $testimonial->customer->avatar ?? asset('images/default-avatar.jpg') }}" 
+                         class="user-avatar" 
+                         alt="{{ $testimonial->customer->name }}">
+                    <div>
+                        <h6>{{ $testimonial->customer->name }}</h6>
+                        <div class="stars">
+                            @for($i = 0; $i < 5; $i++)
+                                @if($i < $testimonial->rating)
+                                <i class="bi bi-star-fill"></i>
+                                @else
+                                <i class="bi bi-star"></i>
+                                @endif
+                            @endfor
                         </div>
-                        <img src="{{asset('theme/hexashop/assets/images/instagram-01.jpg')}}" alt="">
                     </div>
                 </div>
-                <div class="col-2">
-                    <div class="thumb">
-                        <div class="icon">
-                            <a href="http://instagram.com">
-                                <h6>New</h6>
-                                <i class="fa fa-instagram"></i>
-                            </a>
-                        </div>
-                        <img src="{{asset('theme/hexashop/assets/images/instagram-02.jpg')}}" alt="">
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="thumb">
-                        <div class="icon">
-                            <a href="http://instagram.com">
-                                <h6>Brand</h6>
-                                <i class="fa fa-instagram"></i>
-                            </a>
-                        </div>
-                        <img src="{{asset('theme/hexashop/assets/images/instagram-03.jpg')}}" alt="">
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="thumb">
-                        <div class="icon">
-                            <a href="http://instagram.com">
-                                <h6>Makeup</h6>
-                                <i class="fa fa-instagram"></i>
-                            </a>
-                        </div>
-                        <img src="{{asset('theme/hexashop/assets/images/instagram-04.jpg')}}" alt="">
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="thumb">
-                        <div class="icon">
-                            <a href="http://instagram.com">
-                                <h6>Leather</h6>
-                                <i class="fa fa-instagram"></i>
-                            </a>
-                        </div>
-                        <img src="{{asset('theme/hexashop/assets/images/instagram-05.jpg')}}" alt="">
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="thumb">
-                        <div class="icon">
-                            <a href="http://instagram.com">
-                                <h6>Bag</h6>
-                                <i class="fa fa-instagram"></i>
-                            </a>
-                        </div>
-                        <img src="{{asset('theme/hexashop/assets/images/instagram-06.jpg')}}" alt="">
-                    </div>
-                </div>
+                <p class="testimonial-text">"{{ $testimonial->testimonial }}"</p>
             </div>
-        </div>
-    </section>
-    <!-- ***** Social Area Ends ***** -->
-
-    <!-- ***** Subscribe Area Starts ***** -->
-    <div class="subscribe">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="section-heading">
-                        <h2>By Subscribing To Our Newsletter You Can Get 30% Off</h2>
-                        <span>Details to details is what makes Hexashop different from the other themes.</span>
-                    </div>
-                    <form id="subscribe" action="" method="get">
-                        <div class="row">
-                          <div class="col-lg-5">
-                            <fieldset>
-                              <input name="name" type="text" id="name" placeholder="Your Name" required="">
-                            </fieldset>
-                          </div>
-                          <div class="col-lg-5">
-                            <fieldset>
-                              <input name="email" type="text" id="email" pattern="[^ @]*@[^ @]*" placeholder="Your Email Address" required="">
-                            </fieldset>
-                          </div>
-                          <div class="col-lg-2">
-                            <fieldset>
-                              <button type="submit" id="form-submit" class="main-dark-button"><i class="fa fa-paper-plane"></i></button>
-                            </fieldset>
-                          </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-lg-4">
-                    <div class="row">
-                        <div class="col-6">
-                            <ul>
-                                <li>Store Location:<br><span>Sunny Isles Beach, FL 33160, United States</span></li>
-                                <li>Phone:<br><span>010-020-0340</span></li>
-                                <li>Office Location:<br><span>North Miami Beach</span></li>
-                            </ul>
-                        </div>
-                        <div class="col-6">
-                            <ul>
-                                <li>Work Hours:<br><span>07:30 AM - 9:30 PM Daily</span></li>
-                                <li>Email:<br><span>info@company.com</span></li>
-                                <li>Social Media:<br><span><a href="#">Facebook</a>, <a href="#">Instagram</a>, <a href="#">Behance</a>, <a href="#">Linkedin</a></span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
-    <!-- ***** Subscribe Area Ends ***** -->
+</section>
 </x-layout>

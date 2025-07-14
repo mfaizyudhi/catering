@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Categories;
 use App\Models\Product;
-
+use App\Models\Customer;
 use App\Models\Theme;
 use \Binafy\LaravelCart\Models\Cart;
 
@@ -28,9 +28,16 @@ class HomepageController extends Controller
     {
         $categories = Categories::latest()->take(4)->get();
         $products = Product::paginate(20);
+
+         $testimonials = Customer::where('testimonial_approved', true)
+                        ->whereNotNull('testimonial')
+                        ->orderBy('updated_at', 'desc')
+                        ->limit(3)
+                        ->get();
         
         return view($this->themeFolder.'.homepage',[
             'categories' => $categories,
+            'testimonials' => $testimonials, // Kirim data testimonial ke view
             'products'=>$products,
             'title'=>'Homepage'
         ]);

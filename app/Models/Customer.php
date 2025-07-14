@@ -14,6 +14,9 @@ class Customer extends Authenticatable
         'email',
         'address',
         'password',
+        'testimonial',
+        'rating',
+        'testimonial_approved'
     ];
 
     /**

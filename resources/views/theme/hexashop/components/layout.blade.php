@@ -1,81 +1,198 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ $title ?? '' }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    {{ $style ?? '' }}
 
-    <title>Hexashop Ecommerce HTML CSS Template</title>
-
-
-    <!-- Additional CSS Files -->
-    <link rel="stylesheet" type="text/css" href="{{asset('theme/hexashop/assets/css/bootstrap.min.css')}}">
-
-    <link rel="stylesheet" type="text/css" href="{{asset('theme/hexashop/assets/css/font-awesome.css')}}">
-
-    <link rel="stylesheet" href="{{asset('theme/hexashop/assets/css/templatemo-hexashop.css')}}">
-
-    <link rel="stylesheet" href="{{asset('theme/hexashop/assets/css/owl-carousel.css')}}">
-
-    <link rel="stylesheet" href="{{asset('theme/hexashop/assets/css/lightbox.css')}}">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .navbar {
+            background: var(--primary-color) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .product-card, .category-card {
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .category-card .card-body {
+            padding: 1.25rem;
+        }
+        
+        .category-card img {
+            transition: transform 0.3s ease;
+        }
+        
+        .category-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        .btn-primary {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        
+        .btn-outline-primary {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 3rem 0;
+        }
+        
+        footer a {
+            color: var(--light-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        footer a:hover {
+            color: var(--accent-color);
+        }
+        
+        .cart-item {
+            transition: background-color 0.2s;
+        }
+        
+        .cart-item:hover {
+            background-color: rgba(0,0,0,0.02);
+        }
+        
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+        }
+        
+        .alert {
+            border-radius: 8px;
+        }
+        
+        .badge {
+            font-weight: 500;
+            padding: 0.35em 0.65em;
+        }
+        
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+        }
+        
+        .total-section {
+            font-size: 1rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .product-img {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        @media (max-width: 768px) {
+            .product-img {
+                height: 150px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div id="preloader">
-        <div class="jumper">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>
-
     <x-navbar themeFolder="{{ $themeFolder }}"></x-navbar>
 
-    {{  $slot }}
+    <main class="container-fluid py-4">
+        {{ $slot }}
+    </main>
 
-    <x-footer themeFolder="{{ $themeFolder }}"></x-footer>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="mb-3 fw-bold">E-Commerce Pro</h5>
+                    <p class="small">Solusi belanja online profesional dengan pengalaman pengguna yang unggul dan layanan terbaik.</p>
+                    <div class="social-icons mt-3">
+                        <a href="#" class="me-2"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="me-2"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="me-2"><i class="bi bi-twitter-x"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="mb-3 fw-bold">Navigasi</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/">Beranda</a></li>
+                        <li class="mb-2"><a href="/products">Produk</a></li>
+                        <li class="mb-2"><a href="/categories">Kategori</a></li>
+                        <li class="mb-2"><a href="/cart">Keranjang</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h6 class="mb-3 fw-bold">Layanan</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#">Bantuan</a></li>
+                        <li class="mb-2"><a href="#">Kebijakan Privasi</a></li>
+                        <li class="mb-2"><a href="#">Syarat & Ketentuan</a></li>
+                        <li class="mb-2"><a href="#">Pengembalian</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h6 class="mb-3 fw-bold">Kontak</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><i class="bi bi-envelope me-2"></i> info@ecommercepro.com</li>
+                        <li class="mb-2"><i class="bi bi-telephone me-2"></i> +62 856 6100 994</li>
+                        <li class="mb-2"><i class="bi bi-geo-alt me-2"></i> Jakarta, Indonesia</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 bg-light">
+            <div class="text-center pt-3">
+                <small>© {{ date('Y') }} E-Commerce Pro. All rights reserved.</small>
+            </div>
+        </div>
+    </footer>
 
-
-    <!-- jQuery -->
-    <script src="{{asset('theme/hexashop/assets/js/jquery-2.1.0.min.js')}}"></script>
-
-    <!-- Bootstrap -->
-    <script src="{{asset('theme/hexashop/assets/js/popper.js')}}"></script>
-    <script src="{{asset('theme/hexashop/assets/js/bootstrap.min.js')}}"></script>
-
-    <!-- Plugins -->
-    <script src="{{asset('theme/hexashop/assets/js/owl-carousel.js')}}"></script>
-    <script src="{{asset('theme/hexashop/assets/js/accordions.js')}}"></script>
-    <script src="{{asset('theme/hexashop/assets/js/datepicker.js')}}"></script>
-    <script src="{{asset('theme/hexashop/assets/js/scrollreveal.min.js')}}"></script>
-    <script src="{{asset('theme/hexashop/assets/js/waypoints.min.js')}}"></script>
-    <script src="{{asset('theme/hexashop/assets/js/jquery.counterup.min.js')}}"></script>
-    <script src="{{asset('theme/hexashop/assets/js/imgfix.min.js')}}"></script> 
-    <script src="{{asset('theme/hexashop/assets/js/slick.js')}}"></script> 
-    <script src="{{asset('theme/hexashop/assets/js/lightbox.js')}}"></script> 
-    <script src="{{asset('theme/hexashop/assets/js/isotope.js')}}"></script> 
-    
-    <!-- Global Init -->
-    <script src="{{asset('theme/hexashop/assets/js/custom.js')}}"></script>
-
-    <script>
-
-        $(function() {
-            var selectedClass = "";
-            $("p").click(function(){
-            selectedClass = $(this).attr("data-rel");
-            $("#portfolio").fadeTo(50, 0.1);
-                $("#portfolio div").not("."+selectedClass).fadeOut();
-            setTimeout(function() {
-              $("."+selectedClass).fadeIn();
-              $("#portfolio").fadeTo(50, 1);
-            }, 500);
-                
-            });
-        });
-
-    </script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -23,15 +23,15 @@ class CustomerAuthController extends Controller
 
     public function login()
     {
-        return view($this->themeFolder.'.customer.login',[
-            'title'=>'Login'
+        return view($this->themeFolder . '.customer.login', [
+            'title' => 'Login'
         ]);
     }
 
     public function register()
     {
-        return view($this->themeFolder.'.customer.register',[
-            'title'=>'Register'
+        return view($this->themeFolder . '.customer.register', [
+            'title' => 'Register'
         ]);
     }
 
@@ -44,12 +44,12 @@ class CustomerAuthController extends Controller
             'password_confirmation' => 'required'
         ]);
 
-        if($validasi->fails()){
+        if ($validasi->fails()) {
             return redirect()->back()
                 ->with('errorMessage', 'Validasi error, silahkan cek kembali data anda')
                 ->withErrors($validasi)
                 ->withInput();
-        }else{
+        } else {
             $customer = new Customer;
             $customer->name = $request->name;
             $customer->email = $request->email;
@@ -58,7 +58,7 @@ class CustomerAuthController extends Controller
 
             //jika berhasil tersimpan, maka redirect ke halaman login
             return redirect()->route('customer.login')
-                ->with('successMessage','Registrasi Berhasil');
+                ->with('successMessage', 'Registrasi Berhasil');
         }
     }
 
@@ -99,5 +99,31 @@ class CustomerAuthController extends Controller
 
         return redirect()->route('customer.login')
             ->with('successMessage', 'Anda telah berhasil logout');
+    }
+    // Di dalam CustomerAuthController
+    public function showTestimonialForm()
+    {
+        return view($this->themeFolder . '.customer.testimonial', [
+            'title' => 'Beri Testimonial'
+        ]);
+    }
+
+    public function storeTestimonial(Request $request)
+    {
+        $request->validate([
+            'testimonial' => 'required|min:20',
+            'rating' => 'required|integer|between:1,5'
+        ]);
+
+        $customer = \Auth::guard('customer')->user();
+
+        $customer->update([
+            'testimonial' => $request->testimonial,
+            'rating' => $request->rating,
+            'testimonial_approved' => false // Menunggu approval admin
+        ]);
+
+        return redirect()->route('home')
+            ->with('successMessage', 'Testimonial berhasil dikirim! Menunggu persetujuan admin.');
     }
 }
