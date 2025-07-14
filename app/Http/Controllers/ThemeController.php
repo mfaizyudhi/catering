@@ -15,7 +15,7 @@ class ThemeController extends Controller
         $themes = Theme::query()
             ->when($request->q, function ($query) use ($request) {
                 $query->where('name', 'like', '%' . $request->q . '%')
-                      ->orWhere('folder', 'like', '%' . $request->q . '%');
+                    ->orWhere('folder', 'like', '%' . $request->q . '%');
             })
             ->orderBy('created_at', 'desc')
             ->paginate(10);
@@ -46,7 +46,7 @@ class ThemeController extends Controller
             'status' => 'required|in:active,inactive',
         ]);
 
-        if($request->status === 'active') {
+        if ($request->status === 'active') {
             Theme::where('status', 'active')->update(['status' => 'inactive']);
         }
 
@@ -90,7 +90,7 @@ class ThemeController extends Controller
             'status' => 'required|in:active,inactive',
         ]);
 
-        if($request->status === 'active') {
+        if ($request->status === 'active') {
             Theme::where('status', 'active')->update(['status' => 'inactive']);
         }
 
