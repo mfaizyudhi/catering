@@ -21,7 +21,32 @@
                         <div class="card-body p-3">
                             @forelse($cart->items as $item)
                                 <div class="cart-item d-flex align-items-center mb-3 border-bottom pb-3">
-                                    <img src="{{ $item->itemable->image_url ?? 'https://via.placeholder.com/80?text=Product' }}" class="cart-img me-3 rounded" alt="{{ $item->itemable->name }}">
+@php
+    // Pastikan path gambar benar
+    $imagePath = $item->itemable->image_url;
+    
+    // Normalisasi path (hapus 'storage/' jika sudah ada, lalu tambahkan kembali)
+    $normalizedPath = $imagePath ? ltrim(str_replace('storage/', '', $imagePath), '/') : null;
+    
+    // Generate URL yang benar
+    $imageUrl = $normalizedPath 
+        ? (Str::startsWith($normalizedPath, ['http://', 'https://'])
+            ? $normalizedPath // Jika sudah URL lengkap
+            : asset('storage/' . $normalizedPath) // Tambahkan 'storage/'
+        : 'https://via.placeholder.com/80?text=Product';
+    
+    // Debugging (opsional)
+    // echo "DB Path: " . $imagePath . "<br>";
+    // echo "Final URL: " . $imageUrl . "<br>";
+@endphp
+
+<img src="{{ $imageUrl }}" 
+     class="cart-img me-3 rounded" 
+     alt="{{ $item->itemable->name }}"
+     loading="lazy"
+     width="80"
+     height="80"
+     onerror="this.onerror=null;this.src='https://via.placeholder.com/80?text=Image+Not+Found'">
                                     <div class="flex-grow-1">
                                         <h5 class="cart-item-name mb-1">{{ $item->itemable->name }}</h5>
                                         <p class="cart-item-price mb-0 text-muted">Rp.{{ number_format($item->itemable->price, 0, ',', '.') }}</p>

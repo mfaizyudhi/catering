@@ -22,13 +22,14 @@ Route::get('categories', [HomepageController::class, 'categories']);
 Route::get('category/{slug}', [HomepageController::class, 'category']);
 
 Route::get('cart', [HomepageController::class, 'cart'])->name('cart.index');
-Route::get('checkout', [HomepageController::class, 'checkout'])->name('checkout.index');
+Route::get('checkout', [CartController::class, 'checkout'])->name('checkout.index');
 
 Route::group(['middleware' => ['is_customer_login']], function () {
     Route::controller(CartController::class)->group(function () {
         Route::post('cart/add', 'add')->name('cart.add');
         Route::delete('cart/remove/{id}', 'remove')->name('cart.remove');
         Route::patch('cart/update/{id}', 'update')->name('cart.update');
+        
     });
 });
 

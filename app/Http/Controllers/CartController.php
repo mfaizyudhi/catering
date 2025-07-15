@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use \Binafy\LaravelCart\Models\Cart;
+use App\Models\Cart;
 use \Binafy\LaravelCart\Models\CartItem;
 use App\Models\Product;
 
 class CartController extends Controller
 {
     private $cart;
+    private $cart_items;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->cart = Cart::query()->firstOrCreate(
             [
                 'user_id' => auth()->guard('customer')->user()->id
@@ -36,7 +38,7 @@ class CartController extends Controller
 
         // Find the product
         $product = Product::findOrFail($request->product_id);
-        
+
         // Check if the product is available
         if ($product->stock < $request->quantity) {
             return redirect()->back()->with('error', 'Stok tidak mencukupi untuk produk ini.');
@@ -55,26 +57,66 @@ class CartController extends Controller
 
     public function remove($id)
     {
+        $cartItem = $this->cart->items()
+            ->where('id', $id)
+            ->firstOrFail();
 
-        $product = Product::findOrFail($id);
+        $cartItem->delete();
 
-        $this->cart->removeItem($product);
-
-        return redirect()->route('cart.index')->with('success', 'Item removed from cart.');
+        return redirect()->route('cart.index')
+            ->with('success', 'Item berhasil dihapus dari keranjang');
     }
 
-    public function update($id, Request $request)
+    public function update(Request $request, $id)
     {
+        $request->validate([
+            'action' => 'required|in:increase,decrease'
+        ]);
 
-        $product = Product::findOrFail($id);
+        $cartItem = $this->cart->items()
+            ->where('id', $id)
+            ->with('itemable')
+            ->firstOrFail();
 
-        if($request->action == 'decrease')
-        {
-            $this->cart->decreaseQuantity(item: $product);
-        }else if($request->action == 'increase'){
-            $this->cart->increaseQuantity(item: $product);
+        $product = $cartItem->itemable;
+        $newQuantity = $request->action === 'increase'
+            ? $cartItem->quantity + 1
+            : max(1, $cartItem->quantity - 1);
+
+        // Cek stok hanya untuk increase
+        if ($request->action === 'increase' && $product->stock < $newQuantity) {
+            return redirect()->back()
+                ->with('error', 'Stok tidak mencukupi. Stok tersedia: ' . $product->stock);
         }
-        
-        return redirect()->route('cart.index')->with('success', 'Cart updated successfully.');
+
+        $cartItem->update(['quantity' => $newQuantity]);
+
+        return redirect()->route('cart.index')
+            ->with([
+                'success' => 'Jumlah produk berhasil diupdate',
+                'updated_item_id' => $id
+            ]);
     }
+   public function checkout()
+{
+    $user = auth()->guard('customer')->user();
+    if (!$user) return redirect()->route('customer.login');
+
+    // Ambil cart dari model yang benar
+    $cart = \App\Models\Cart::with(['items.itemable']) // <- ini Binafy punya
+        ->where('user_id', $user->id)
+        ->first();
+
+    if (!$cart) {
+        logger()->error('Cart not found for user: ' . $user->id);
+        return redirect()->back()->with('error', 'Keranjang tidak ditemukan');
+    }
+
+    return view('theme.hexashop.checkout', [
+        'cart' => $cart,
+        'cart_items' => $cart->items
+    ]);
+}
+
+
 }

@@ -107,30 +107,34 @@
                     <div class="card-body p-4">
                         <h5 class="mb-4 fw-bold">Ringkasan Pesanan</h5>
                         
-                        <ul class="list-group mb-3">
-                            @foreach($cart->items as $item)
-                                <li class="list-group-item d-flex justify-content-between lh-sm">
-                                    <div>
-                                        <h6 class="my-0">{{ $item->itemable->name }}</h6>
-                                        <small class="text-muted">Qty: {{ $item->quantity }}</small>
-                                    </div>
-                                    <span class="text-muted">Rp{{ number_format($item->itemable->price * $item->quantity, 0, ',', '.') }}</span>
-                                </li>
-                            @endforeach
-                            
-                            <li class="list-group-item d-flex justify-content-between bg-light">
-                                <span>Subtotal</span>
-                                <span>Rp{{ number_format($cart->calculatedPriceByQuantity(), 0, ',', '.') }}</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between bg-light">
-                                <span>Ongkos Kirim</span>
-                                <span>Gratis</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between fw-bold">
-                                <span>Total</span>
-                                <span>Rp{{ number_format($cart->calculatedPriceByQuantity(), 0, ',', '.') }}</span>
-                            </li>
-                        </ul>
+                      <ul class="list-group mb-3">
+    @isset($cart_items)
+        @forelse($cart_items as $item)
+            <li class="list-group-item d-flex justify-content-between lh-sm">
+                <div>
+                    <h6 class="my-0">{{ $item->itemable->name ?? 'Produk tidak tersedia' }}</h6>
+                    <small class="text-muted">Qty: {{ $item->quantity }}</small>
+                </div>
+                <span class="text-muted">
+                    Rp{{ number_format(($item->itemable->price ?? 0) * $item->quantity, 0, ',', '.') }}
+                </span>
+            </li>
+        @empty
+            <li class="list-group-item text-center py-4">
+                <i class="bi bi-cart-x fs-1 text-muted"></i>
+                <p class="mt-2 mb-0">Keranjang belanja kosong</p>
+            </li>
+        @endforelse
+    @else
+        <li class="list-group-item text-center py-4">
+            <i class="bi bi-exclamation-triangle-fill fs-1 text-warning"></i>
+            <p class="mt-2 mb-0">Data keranjang tidak tersedia</p>
+        </li>
+    @endisset
+</ul>
+
+
+
                         
                         <div class="alert alert-info mt-3">
                             <i class="bi bi-info-circle-fill me-2"></i>

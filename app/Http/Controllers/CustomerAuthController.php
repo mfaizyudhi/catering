@@ -108,6 +108,15 @@ class CustomerAuthController extends Controller
         ]);
     }
 
+    // app/Http/Controllers/Auth/LoginController.php
+    protected function authenticated()
+    {
+        if (url()->previous() === route('cart.index')) {
+            return redirect()->route('cart.index');
+        }
+        return redirect()->intended($this->redirectPath());
+    }
+
     public function storeTestimonial(Request $request)
     {
         $request->validate([

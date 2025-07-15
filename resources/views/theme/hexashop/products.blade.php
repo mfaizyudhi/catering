@@ -19,7 +19,7 @@
                 <div class="col-xl-3 col-lg-4 col-md-6">
                     <div class="card product-card h-100">
                         <div class="position-relative">
-                            <img src="{{ $product->image_url ? asset('storage/' . $product->image_url) : 'https://via.placeholder.com/350x200?text=No+Image' }}"
+                            <img src="{{ $product->image_url }}"
                                  class="card-img-top product-img" alt="{{ $product->name }}">
                             @if($product->old_price)
                                 <span class="badge bg-danger position-absolute top-0 end-0 m-2">Sale</span>

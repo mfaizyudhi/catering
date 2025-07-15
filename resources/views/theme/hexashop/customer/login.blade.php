@@ -10,49 +10,49 @@
                         </div>
 
                         @if(session('errorMessage'))
-                            <div class="alert alert-danger alert-dismissible fade show">
-                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                                {{ session('errorMessage') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            {{ session('errorMessage') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
                         @endif
 
                         @if(session('successMessage'))
-                            <div class="alert alert-success alert-dismissible fade show">
-                                <i class="bi bi-check-circle-fill me-2"></i>
-                                {{ session('successMessage') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
+                        <div class="alert alert-success alert-dismissible fade show">
+                            <i class="bi bi-check-circle-fill me-2"></i>
+                            {{ session('successMessage') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
                         @endif
 
                         <form method="POST" action="{{ route('customer.login') }}">
                             @csrf
                             <div class="mb-3">
                                 <label for="email" class="form-label">Alamat Email</label>
-                                <input type="email" 
-                                       class="form-control @error('email') is-invalid @enderror" 
-                                       id="email" 
-                                       name="email" 
-                                       value="{{ old('email') }}" 
-                                       required 
-                                       autofocus>
+                                <input type="email"
+                                    class="form-control @error('email') is-invalid @enderror"
+                                    id="email"
+                                    name="email"
+                                    value="{{ old('email') }}"
+                                    required
+                                    autofocus>
                                 @error('email')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" 
-                                       class="form-control @error('password') is-invalid @enderror" 
-                                       id="password" 
-                                       name="password" 
-                                       required>
+                                <input type="password"
+                                    class="form-control @error('password') is-invalid @enderror"
+                                    id="password"
+                                    name="password"
+                                    required>
                                 @error('password')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            
+
                             <div class="d-flex justify-content-between align-items-center mb-4">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="remember" name="remember">
@@ -60,13 +60,13 @@
                                 </div>
                                 <a href="#" class="small text-muted">Lupa Password?</a>
                             </div>
-                            
+
                             <button type="submit" class="btn btn-primary w-100 py-2 mb-3">
                                 <i class="bi bi-box-arrow-in-right me-2"></i> Masuk
                             </button>
-                            
+
                             <div class="text-center">
-                                <p class="text-muted mb-0">Belum punya akun? 
+                                <p class="text-muted mb-0">Belum punya akun?
                                     <a href="{{ route('customer.register') }}" class="text-decoration-none">Daftar sekarang</a>
                                 </p>
                             </div>
@@ -75,5 +75,11 @@
                 </div>
             </div>
         </div>
+        @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        @endif
     </div>
 </x-layout>

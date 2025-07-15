@@ -109,6 +109,13 @@ class HomepageController extends Controller
 
     public function cart()
     {
+        // Jika belum login, redirect ke halaman login dengan pesan
+        if (!auth()->guard('customer')->check()) {
+            return redirect()->route('customer.login')
+                ->with('error', 'Anda belum login. Silahkan login terlebih dahulu untuk melihat keranjang belanja');
+        }
+
+
         $cart = Cart::query()
             ->with(
                 [
