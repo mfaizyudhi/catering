@@ -42,7 +42,7 @@
                     : asset('images/placeholder-product.png');
                     @endphp
 
-                    <img src="{{ $finalImageUrl }}"
+                    <img src="{{ $product->image_url }}"
                         class="img-fluid rounded"
                         alt="{{ htmlspecialchars($product->name) }}"
                         style="max-height: 500px; object-fit: contain;">
