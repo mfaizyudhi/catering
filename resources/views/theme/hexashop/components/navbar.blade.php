@@ -3,7 +3,7 @@
         <div class="container">
             <a class="navbar-brand fw-bold d-flex align-items-center" href="/">
                 <i class="bi bi-shop me-2"></i>
-                <span>E-Commerce Pro</span>
+                <span>cathering</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
                 <span class="navbar-toggler-icon"></span>

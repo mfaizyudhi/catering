@@ -7,9 +7,9 @@
                         <img src="{{asset('theme/hexashop/assets/images/white-logo.png')}}" alt="hexashop ecommerce templatemo">
                     </div>
                     <ul>
-                        <li><a href="#">16501 Collins Ave, Sunny Isles Beach, FL 33160, United States</a></li>
-                        <li><a href="#">hexashop@company.com</a></li>
-                        <li><a href="#">010-020-0340</a></li>
+                        <li><a href="#">tegal, jawa tengah, indonesia</a></li>
+                        <li><a href="#">cathering@gmail.com</a></li>
+                        <li><a href="#">083161080128</a></li>
                     </ul>
                 </div>
             </div>
@@ -41,7 +41,7 @@
             </div>
             <div class="col-lg-12">
                 <div class="under-footer">
-                    <p>Copyright © 2022 HexaShop Co., Ltd. All Rights Reserved. 
+                    <p>Copyright © 2022 cathering Co., Ltd. All Rights Reserved. 
                     
                     <br>Design: <a href="https://templatemo.com" target="_parent" title="free css templates">TemplateMo</a>
 
