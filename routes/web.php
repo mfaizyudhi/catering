@@ -14,7 +14,6 @@ use App\Http\Controllers\OrderController;
 
 use App\Http\Controllers\ApiController;
 
-//kode baru diubah menjadi seperti ini
 Route::get('/', [HomepageController::class, 'index'])->name('home');
 Route::get('products', [HomepageController::class, 'products']);
 Route::get('product/{slug}', [HomepageController::class, 'product'])->name('product.show');
