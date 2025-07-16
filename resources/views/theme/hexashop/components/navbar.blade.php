@@ -1,9 +1,9 @@
 <div>
-    <nav class="navbar navbar-expand-lg navbar-dark py-3">
+    <nav class="navbar navbar-expand-lg bg-primary navbar-dark py-3">
         <div class="container">
             <a class="navbar-brand fw-bold d-flex align-items-center" href="/">
                 <i class="bi bi-shop me-2"></i>
-                <span>cathering</span>
+                <span>Cathering</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
                 <span class="navbar-toggler-icon"></span>
